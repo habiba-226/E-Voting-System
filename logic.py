@@ -14,6 +14,7 @@ def add_candidate(candidate_name):
     print("Adding candidate")
     with open("files/candidates.txt", "a") as file:
         file.write(candidate_name + "\n")
+        
 
 
 # returns candidates from file
@@ -31,6 +32,8 @@ def delete_candidate(candidate_name):
         for line in lines:
             if line.strip("\n") != candidate_name:
                 f.write(line)
+    print("Candidate deleted")
+
 
 
 ## https://stackoverflow.com/questions/4710067/how-to-delete-a-specific-line-in-a-text-file-using-python 
