@@ -3,6 +3,8 @@ import threading
 import hashlib
 import os
 import json
+from logic import already_voted
+
 
 # Define server constants
 SERVER_NAME = 'localhost'  # Change this if using a remote server
@@ -26,9 +28,15 @@ def handle_client(client_socket, client_address):
         try:
             data = json.loads(message)
             client_id = data.get('client_id')
+            if already_voted(client_id):
+                client_socket.sendall(b"You already voted!")
+                client_socket.close()  # Close the client socket immediately
+                return
+
             vote = data.get('vote')
         except json.JSONDecodeError:
             client_socket.sendall(b"Invalid message format")
+            client_socket.close()  # Close the client socket immediately
             return
 
         # Process the vote (store in a file or database)
@@ -48,6 +56,8 @@ def handle_client(client_socket, client_address):
 def process_vote(client_id, vote):
     # Simulate storing the vote (in reality, this should be handled more securely)
     vote_filename = "votes.txt"
+
+    
 
     with open(vote_filename, "a") as file:
         file.write(f"{client_id}: {vote}\n")

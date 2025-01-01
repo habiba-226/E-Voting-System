@@ -41,13 +41,13 @@ def send_to_server(vote):
 
 
 ## here we are testing the function
-send_to_server("John B")
+send_to_server("Judy Essam")
 time.sleep(1)
-send_to_server("no")
+send_to_server("Judy Essam")
 time.sleep(1)
-send_to_server("yes")
+send_to_server("Habiba Ahmed")
 time.sleep(1)
-send_to_server("no")
+send_to_server("Judy Essam")
 time.sleep(1)
 
 
