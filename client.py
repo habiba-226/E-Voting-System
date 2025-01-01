@@ -1,5 +1,6 @@
 from socket import *
 import threading
+import json
 import hashlib
 import time
 from tkinter import messagebox
@@ -20,8 +21,9 @@ def send_to_server(vote):
             client_id = hashlib.sha1(client_ip.encode()).hexdigest() #hashing the ip to get a unique id
            ##  print(client_id) #print for debugging purposes
 
-            message = {"client_id": client_id, "vote": vote} # the message is in the form of a dictionary
-            clientsocket.sendall(bytes(str(message), "utf-8"))
+            message = {"client_id": client_id, "vote": vote}
+            json_message = json.dumps(message)  # the message is in the form of a dictionary
+            clientsocket.sendall(bytes(str(json_message), "utf-8"))
 
             response = clientsocket.recv(1024).decode()
             print(response)
@@ -39,7 +41,7 @@ def send_to_server(vote):
 
 
 ## here we are testing the function
-send_to_server("yes")
+send_to_server("John B")
 time.sleep(1)
 send_to_server("no")
 time.sleep(1)
