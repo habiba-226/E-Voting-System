@@ -7,19 +7,19 @@ from logic import already_voted
 
 
 # Define server constants
-SERVER_NAME = 'localhost'  # Change this if using a remote server
+SERVER_NAME = '0.0.0.0'  
 SERVER_PORT = 12000
 CANDIDATE_FILE = "files/candidates.txt"
 
 # Create a lock to prevent race conditions on file access
 file_lock = threading.Lock()
 
+
 # Function to handle each client connection
 def handle_client(client_socket, client_address):
     try:
         print(f"Connection from {client_address} established")
 
-        # Receive and decode message from client
         message = client_socket.recv(1024).decode()
         if not message:
             return
