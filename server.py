@@ -52,6 +52,10 @@ def handle_client(client_socket, client_address):
         # Close the client socket
         client_socket.close()
 
+
+
+
+
 # Function to process a vote (store in a simple file for now)
 def process_vote(client_id, vote):
     # Simulate storing the vote (in reality, this should be handled more securely)
@@ -62,6 +66,8 @@ def process_vote(client_id, vote):
     with open(vote_filename, "a") as file:
         file.write(f"{client_id}: {vote}\n")
     print(f"Vote recorded: {client_id} voted {vote}")
+
+    
 # Function to start the server and listen for incoming client connections
 def start_server():
     # Create a TCP/IP socket
@@ -80,6 +86,9 @@ def start_server():
         client_thread = threading.Thread(target=handle_client, args=(client_socket, client_address))
         client_thread.daemon = True
         client_thread.start()
+
+
+
 
 if __name__ == "__main__":
     if not os.path.exists("files"):

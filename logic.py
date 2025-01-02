@@ -49,13 +49,13 @@ def already_voted(user_id):
 def count_votes():
     votes = {}
     candidates = get_candidate()
+    for candidate in candidates:
+        votes[candidate] = 0
     with open("votes.txt") as file:
         for line in file:
             line_list = line.split(":")
             line_list = [item.strip() for item in line_list]  
             if line_list[1] in candidates:
-                 if line_list[1] not in votes:
-                    votes[line_list[1]] = 0
                  votes[line_list[1]] += 1
     print(votes)
     return votes
