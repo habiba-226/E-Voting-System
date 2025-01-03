@@ -1,9 +1,8 @@
 import tkinter as tk
 from tkinter import *
+from tkinter import simpledialog, messagebox
 import subprocess
 
-def switch_to_server():
-    subprocess.Popen(['python', 'serverGUI.py'])
 
 def switch_to_client():
     subprocess.Popen(['python', 'clientGUI.py'])
@@ -18,6 +17,7 @@ def check_if_admin():
     else:
         messagebox.showerror("Error", "Incorrect password!")
     return True
+
 
 
 def is_server_running():
@@ -40,7 +40,7 @@ def Home(root, frame1):
 
     Label(frame1, text="Welcome to the Voting System", font=('Helvetica', 24, 'bold'), bg="#f0f0f0", fg="#333333").grid(row=0, column=0, columnspan=2, pady=20)
 
-    admin_button = Button(frame1, text="Admin", width=20, height=2, font=('Helvetica', 14), command=switch_to_server, bg="#374375", fg="white", relief="raised", bd=5)
+    admin_button = Button(frame1, text="Admin", width=20, height=2, font=('Helvetica', 14), command=check_if_admin, bg="#374375", fg="white", relief="raised", bd=5)
     admin_button.grid(row=1, column=0, columnspan=2, pady=15)
 
 
