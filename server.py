@@ -3,6 +3,8 @@ import threading
 import hashlib
 import os
 import json
+import sys
+import signal
 from logic import already_voted
 
 
@@ -10,7 +12,8 @@ from logic import already_voted
 SERVER_NAME = '0.0.0.0'  
 SERVER_PORT = 12000
 CANDIDATE_FILE = "files/candidates.txt"
-
+global server_socket
+server_socket = None
 # Create a lock to prevent race conditions on file access
 file_lock = threading.Lock()
 
@@ -70,8 +73,10 @@ def process_vote(client_id, vote):
     
 # Function to start the server and listen for incoming client connections
 def start_server():
-    # Create a TCP/IP socket
+    global server_socket
+   
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
     # Bind the socket to the address and port
     server_socket.bind((SERVER_NAME, SERVER_PORT))
@@ -89,6 +94,13 @@ def start_server():
 
 
 
+def shutdown_server():
+    global server_socket
+    print("Shutting down server...")
+    if server_socket:
+        server_socket.close()
+    
+
 
 if __name__ == "__main__":
     if not os.path.exists("files"):
@@ -96,4 +108,5 @@ if __name__ == "__main__":
     if not os.path.exists(CANDIDATE_FILE):
         with open(CANDIDATE_FILE, "w") as f:
             pass  # Create the file if it doesn't exist
+    signal.signal(signal.SIGINT, lambda sig, frame: shutdown_server())
     start_server()

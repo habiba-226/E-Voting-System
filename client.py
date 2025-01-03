@@ -35,6 +35,7 @@ def send_to_server(vote):
 
         except Exception as e:
             print(f"Error connecting to server {e}")
+            messagebox.showerror("Error", "Server is closed, Votes haven't started yet!")
             return False
         
         

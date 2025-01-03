@@ -1,8 +1,9 @@
 import tkinter as tk
 from logic import add_candidate, delete_candidate, count_votes
-from server import start_server
+from server import start_server, shutdown_server
 import threading
-
+import sys
+import signal
 
 
 def show_frame(frame): ## for showing the frame
@@ -37,7 +38,7 @@ def initialize_vote_count(vote_count_text): #for initializing the vote count
 
 root = tk.Tk()
 root.title("Control Server")
-root.geometry('400x400')
+root.geometry('500x600')
 
 # Control Page
 
@@ -65,6 +66,9 @@ add_button.grid(row=1, column=2, padx=5, pady=5)
 # added threading so it doesnt block the main thread [UI]
 start_button = tk.Button(root, text="Start Server", command=lambda: threading.Thread(target=start_server).start())
 start_button.pack(pady=10)
+
+end_button = tk.Button(root, text="End Server", command=lambda: threading.Thread(target=shutdown_server).start())
+end_button.pack(pady=10)
 
 # Vote Count Section
 vote_count_frame = tk.Frame(root)
