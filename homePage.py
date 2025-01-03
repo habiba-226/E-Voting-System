@@ -9,6 +9,17 @@ def switch_to_client():
     subprocess.Popen(['python', 'clientGUI.py'])
 
 
+## um i still dk how i shall put this bas ya3ny mashy eshta
+def check_if_admin():
+    admin_password = "admin"
+    password = simpledialog.askstring("Input", "Enter password", show='*')
+    if password == admin_password:
+        subprocess.Popen(['python', 'serverGUI.py'])
+    else:
+        messagebox.showerror("Error", "Incorrect password!")
+    return True
+
+
 def is_server_running():
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
