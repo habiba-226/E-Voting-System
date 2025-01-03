@@ -76,7 +76,7 @@ def start_server():
     global server_socket
    
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-   # server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # i can reuse the address
+    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # i can reuse the address
 
     # Bind the socket to the address and port
     server_socket.bind((SERVER_NAME, SERVER_PORT))
