@@ -1,3 +1,7 @@
+background_color = "#F9E6CF"
+text_color = "#69247C"
+
+
 
 ## adding candidates via IO [serverGUI]
 def add_candidate(candidate_name):

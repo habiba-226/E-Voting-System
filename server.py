@@ -76,7 +76,7 @@ def start_server():
     global server_socket
    
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+   # server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # i can reuse the address
 
     # Bind the socket to the address and port
     server_socket.bind((SERVER_NAME, SERVER_PORT))
@@ -84,13 +84,14 @@ def start_server():
 
     # Start listening for incoming connections (max 5 connections in the backlog)
     server_socket.listen(5)
-
+    running = True
     # Continuously accept and handle client connections
-    while True:
+    while running:
         client_socket, client_address = server_socket.accept()
         client_thread = threading.Thread(target=handle_client, args=(client_socket, client_address))
         client_thread.daemon = True
         client_thread.start()
+    
 
 
 

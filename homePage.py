@@ -4,13 +4,14 @@ from tkinter import simpledialog, messagebox
 import subprocess
 
 
+
 def switch_to_client():
     subprocess.Popen(['python', 'clientGUI.py'])
 
 
 ## um i still dk how i shall put this bas ya3ny mashy eshta
 def check_if_admin():
-    admin_password = "admin"
+    admin_password = "urmother"
     password = simpledialog.askstring("Input", "Enter password", show='*')
     if password == admin_password:
         subprocess.Popen(['python', 'serverGUI.py'])
@@ -23,7 +24,7 @@ def check_if_admin():
 def is_server_running():
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((" localhost", 12345))
+        s.connect((" localhost", 12000))
         s.close()
         return True
     except Exception as e:
@@ -36,11 +37,12 @@ def Home(root, frame1):
             widget.destroy()
 
     root.title("Voting System - Home")
-    root.configure(bg="#f0f0f0")
+    
+    root.configure(bg="#F9E6CF")
 
-    Label(frame1, text="Welcome to the Voting System", font=('Helvetica', 24, 'bold'), bg="#f0f0f0", fg="#333333").grid(row=0, column=0, columnspan=2, pady=20)
+    Label(frame1, text="Welcome to the Voting System", font=('Helvetica', 20, 'bold'), bg="#F9E6CF", fg="#69247C").grid(row=0, column=0, columnspan=2, pady=20)
 
-    admin_button = Button(frame1, text="Admin", width=20, height=2, font=('Helvetica', 14), command=check_if_admin, bg="#374375", fg="white", relief="raised", bd=5)
+    admin_button = Button(frame1, text="Admin", width=20, height=2, font=('Helvetica', 14), command=check_if_admin, bg="#A888B5", fg="white", relief="raised", bd=5)
     admin_button.grid(row=1, column=0, columnspan=2, pady=15)
 
 
@@ -56,8 +58,8 @@ def Home(root, frame1):
 
 def new_home():
     root = Tk()
-    root.geometry('500x500')
-    frame1 = Frame(root, bg="#f0f0f0")
+    root.geometry('500x400')
+    frame1 = Frame(root, bg="#F9E6CF")
     Home(root, frame1)
 
 if __name__ == "__main__":

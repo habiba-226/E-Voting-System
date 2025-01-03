@@ -1,6 +1,6 @@
 import tkinter as tk
 from client import send_to_server
-from logic import get_candidate
+from logic import get_candidate, background_color
 import threading
 import json
 import hashlib
@@ -25,7 +25,7 @@ def on_vote_button_click():
 root = tk.Tk()
 root.title("Voting System - Voter")
 root.geometry("400x350")
-root.configure(bg="#f2f2f2") 
+root.configure(bg=background_color) 
 
 candidates = get_candidate()
 if not candidates:
@@ -33,10 +33,10 @@ if not candidates:
     root.quit()
     
 
-title_label = Label(root, text="Vote for Your Candidate", font=('Helvetica', 16, 'bold'), bg="#f2f2f2", fg="#333333")
+title_label = Label(root, text="Vote for Your Candidate", font=('Helvetica', 16, 'bold'), bg=background_color, fg="#333333")
 title_label.pack(pady=20)
 
-candidate_label = Label(root, text="Select a candidate", font=('Helvetica', 12), bg="#f2f2f2", fg="#333333")
+candidate_label = Label(root, text="Select a candidate", font=('Helvetica', 12), bg=background_color, fg="#333333")
 candidate_label.pack(pady=10)
 
 candidate_var = StringVar(root)
@@ -47,12 +47,12 @@ candidate_menu.config(font=('Helvetica', 12), width=20)
 candidate_menu.pack(pady=10)
 
 
-vote_button = Button(root, text="Vote", font=('Helvetica', 14, 'bold'), bg="#4CAF50", fg="white", height=2,
+vote_button = Button(root, text="Vote", font=('Helvetica', 14, 'bold'), bg="#AA5486", fg="white", height=2,
                     width=20, command=lambda: send_to_server(candidate_var.get()))
 vote_button.pack(pady=20)
 
 # Footer label (Credits or instructions)
-footer_label = Label(root, text="Voting System - Powered by Socket Programming", font=('Helvetica', 8), bg="#f2f2f2", fg="#888888")
+footer_label = Label(root, text="Voting System - Powered by Socket Programming", font=('Helvetica', 8), bg=background_color, fg="#888888")
 footer_label.pack(side=BOTTOM, pady=10)
 
 root.mainloop()
