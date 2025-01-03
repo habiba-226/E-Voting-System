@@ -1,6 +1,16 @@
 import tkinter as tk
 from client import send_to_server
 from logic import get_candidate
+import threading
+import json
+import hashlib
+from tkinter import *
+from tkinter import messagebox
+import socket
+import hashlib
+import uuid
+
+
 
 
 def show_frame(frame): ## for showing the frame
@@ -11,44 +21,43 @@ def on_vote_button_click():
     print(vote)
     send_to_server(vote)
 
+
 root = tk.Tk()
-root.title("Control Server")
-root.geometry('400x400')
-#root.geometry('200x100')
-
-## radio buttons for the candidates
-
-
-tk.Label(root, 
-        text="""Choose a Candidate (★‿★):""",
-        justify = tk.LEFT,
-        padx = 20).pack()
-
-
+root.title("Voting System - Voter")
+root.geometry("400x350")
+root.configure(bg="#f2f2f2") 
 
 candidates = get_candidate()
-user_choice = tk.StringVar()
-user_choice.set(candidates[0])
+if not candidates:
+    messagebox.showerror("Error", "No candidates available to vote for!")
+    root.quit()
+    
 
-for candidate in candidates:
-    candidate_radio = tk.Radiobutton(root, text=candidate, value=candidate, variable=user_choice)
-    candidate_radio.pack()
+title_label = Label(root, text="Vote for Your Candidate", font=('Helvetica', 16, 'bold'), bg="#f2f2f2", fg="#333333")
+title_label.pack(pady=20)
+
+candidate_label = Label(root, text="Select a candidate", font=('Helvetica', 12), bg="#f2f2f2", fg="#333333")
+candidate_label.pack(pady=10)
+
+candidate_var = StringVar(root)
+candidate_var.set(candidates[0])  
+
+candidate_menu = OptionMenu(root, candidate_var, *candidates)
+candidate_menu.config(font=('Helvetica', 12), width=20)
+candidate_menu.pack(pady=10)
 
 
+vote_button = Button(root, text="Vote", font=('Helvetica', 14, 'bold'), bg="#4CAF50", fg="white", height=2,
+                    width=20, command=lambda: send_to_server(candidate_var.get()))
+vote_button.pack(pady=20)
 
-# add_label = tk.Label(root, text="Vote for a candidate")
-# add_label.pack()
-# add_entry = tk.Entry(root)
-# add_entry.pack()
-
-add_button = tk.Button(root, text="Vote", command=on_vote_button_click)
-add_button.padx = 10
-add_button.pady = 10
-add_button.background = 'blue'
-add_button.pack()
-
+# Footer label (Credits or instructions)
+footer_label = Label(root, text="Voting System - Powered by Socket Programming", font=('Helvetica', 8), bg="#f2f2f2", fg="#888888")
+footer_label.pack(side=BOTTOM, pady=10)
 
 root.mainloop()
+
+
 
 
 # references:
