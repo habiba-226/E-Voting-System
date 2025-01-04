@@ -11,7 +11,7 @@ def switch_to_client():
 
 ## um i still dk how i shall put this bas ya3ny mashy eshta
 def check_if_admin():
-    admin_password = "urmother"
+    admin_password = "admin"
     password = simpledialog.askstring("Input", "Enter password", show='*')
     if password == admin_password:
         subprocess.Popen(['python', 'serverGUI.py'])
