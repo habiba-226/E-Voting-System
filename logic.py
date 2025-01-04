@@ -1,9 +1,11 @@
+## GUI colors
 background_color = "#F9E6CF"
 text_color = "#69247C"
 
 
 
-## adding candidates via IO [serverGUI]
+
+## adding candidates to file
 def add_candidate(candidate_name):
     with open("files/candidates.txt", "r") as file:
         for line in file:
@@ -11,14 +13,13 @@ def add_candidate(candidate_name):
                 print("Candidate already exists")
                 return
 
-    ## if the candidate doesnt exist, i will add him to the file
-    print("Adding candidate")
+    print("Adding candidate...")
     with open("files/candidates.txt", "a") as file:
         file.write(candidate_name + "\n")
         
 
 
-# returns candidates from file [server+client GUI]
+# returns a list of candidates
 def get_candidate():
      candidates = []
      with open("files/candidates.txt", "r") as file:
@@ -27,7 +28,7 @@ def get_candidate():
      return candidates
         
 
-# deletes the given candidate, if candidate doesnt exist [server GUI]
+# deletes the given candidate, if candidate doesnt exist 
 def delete_candidate(candidate_name):
     with open("files/candidates.txt", "r") as f:
         lines = f.readlines()
@@ -39,7 +40,7 @@ def delete_candidate(candidate_name):
 
 
 
-# checks if the user already voted or not [server code]
+# checks if the user already voted or not
 def already_voted(user_id):
     with open("votes.txt", "r") as file:
         for line in file:
@@ -61,12 +62,7 @@ def count_votes():
             line_list = [item.strip() for item in line_list]  
             if line_list[1] in candidates:
                  votes[line_list[1]] += 1
-    print(votes)
+    # print(votes)
     return votes
 
     
-
-
-count_votes()
-
-## https://stackoverflow.com/questions/4710067/how-to-delete-a-specific-line-in-a-text-file-using-python 

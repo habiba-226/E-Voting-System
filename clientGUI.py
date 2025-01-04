@@ -22,10 +22,12 @@ def on_vote_button_click():
     send_to_server(vote)
 
 
+#GUI
 root = tk.Tk()
 root.title("Voting System - Voter")
 root.geometry("400x350")
 root.configure(bg=background_color) 
+
 
 candidates = get_candidate()
 if not candidates:
@@ -48,17 +50,13 @@ candidate_menu.pack(pady=10)
 
 
 vote_button = Button(root, text="Vote", font=('Helvetica', 14, 'bold'), bg="#AA5486", fg="white", height=2,
-                    width=20, command=lambda: send_to_server(candidate_var.get()))
+                     width=20, command=lambda: send_to_server(candidate_var.get()))
 vote_button.pack(pady=20)
 
-# Footer label (Credits or instructions)
+
 footer_label = Label(root, text="Voting System - Powered by Socket Programming", font=('Helvetica', 8), bg=background_color, fg="#888888")
 footer_label.pack(side=BOTTOM, pady=10)
 
 root.mainloop()
 
 
-
-
-# references:
-## https://python-course.eu/tkinter/radio-buttons-in-tkinter.php#:~:text=A%20radio%20button%2C%20sometimes%20called,text%20in%20a%20single%20font.

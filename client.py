@@ -19,15 +19,19 @@ def send_to_server(vote):
                                                     
 
         try:
-            clientsocket.connect((servername, serverport)) # connects lel server
-            client_ip = gethostbyname(gethostname())  #the unique server
-            client_id = hashlib.sha1(client_ip.encode()).hexdigest() #hashing the ip to get a unique id
-           ##  print(client_id) #print for debugging purposes
+            # server connection
+            clientsocket.connect((servername, serverport)) 
 
+            #unique id
+            client_ip = gethostbyname(gethostname())  
+            client_id = hashlib.sha1(client_ip.encode()).hexdigest() 
+
+            #sending
             message = {"client_id": client_id, "vote": vote}
-            json_message = json.dumps(message)  # convert the message to json format
+            json_message = json.dumps(message)  # convert the message to json format so it can be understood by the server
             clientsocket.sendall(bytes(str(json_message), "utf-8")) 
 
+            #response
             response = clientsocket.recv(1024).decode()
             print(response)
             messagebox.showinfo("Vote", response)

@@ -12,41 +12,50 @@ from logic import already_voted
 SERVER_NAME = '0.0.0.0'  
 SERVER_PORT = 12000
 CANDIDATE_FILE = "files/candidates.txt"
+
+
 global server_socket
 server_socket = None
-# Create a lock to prevent race conditions on file access
+
+
+# prevent race conditions on file access
 file_lock = threading.Lock()
 
 
-# Function to handle each client connection
 def handle_client(client_socket, client_address):
     try:
         print(f"Connection from {client_address} established")
 
+        # message recieved
         message = client_socket.recv(1024).decode()
         if not message:
             return
 
-        # Parse the message (should be a JSON string)
+       
         try:
+            # process the message
             data = json.loads(message)
             client_id = data.get('client_id')
+
+            # check if the user already votes or not [can be removed while debugging]
             if already_voted(client_id):
                 client_socket.sendall(b"You already voted!")
-                client_socket.close()  # Close the client socket immediately
+                client_socket.close()  
                 return
 
             vote = data.get('vote')
+
+        # if message format was wrong, as in a non-JSON format
         except json.JSONDecodeError:
             client_socket.sendall(b"Invalid message format")
-            client_socket.close()  # Close the client socket immediately
+            client_socket.close()  
             return
 
-        # Process the vote (store in a file or database)
+        # add file to the votes.txt
         with file_lock:
             process_vote(client_id, vote)
 
-        # Respond to the client with a success message
+      
         response = f"Vote for {vote} has been recorded successfully!"
         client_socket.sendall(response.encode())
     except Exception as e:
@@ -59,12 +68,10 @@ def handle_client(client_socket, client_address):
 
 
 
-# Function to process a vote (store in a simple file for now)
+# add votes to votes.txt
 def process_vote(client_id, vote):
-    # Simulate storing the vote (in reality, this should be handled more securely)
-    vote_filename = "votes.txt"
 
-    
+    vote_filename = "votes.txt"
 
     with open(vote_filename, "a") as file:
         file.write(f"{client_id}: {vote}\n")
